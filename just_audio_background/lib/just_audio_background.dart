@@ -449,6 +449,14 @@ class _PlayerAudioHandler extends BaseAudioHandler
       initialPosition: request.initialPosition,
       initialIndex: request.initialIndex,
     ));
+    // Explicitly emit the current media item after loading a new source.
+    // The trackInfo stream uses .distinct() on (index, duration), which
+    // suppresses mediaItem.add() when consecutive single audio sources
+    // have the same duration — causing lock screen artwork to disappear.
+    final loaded = currentMediaItem;
+    if (loaded != null) {
+      mediaItem.add(loaded.copyWith(duration: response.duration));
+    }
     return LoadResponse(duration: response.duration);
   }
 
