@@ -1,8 +1,8 @@
-name: just_audio
-description: A feature-rich audio player for Flutter. Loop, clip and sequence any sound from any source (asset/file/URL/stream) in gapless playlists.
-version: 0.10.5
-repository: https://github.com/ryanheise/just_audio/tree/minor/just_audio
-issue_tracker: https://github.com/ryanheise/just_audio/issues
+name: dlct_just_audio
+description: A feature-rich audio player for Flutter. Maintained by DayLight Creative Technologies. Forked from just_audio v0.10.5.
+version: 1.0.0
+repository: https://github.com/DayLight-Creative-Technologies/dlct_just_audio/tree/main/just_audio
+issue_tracker: https://github.com/DayLight-Creative-Technologies/dlct_just_audio/issues
 topics:
   - audio
   - sound

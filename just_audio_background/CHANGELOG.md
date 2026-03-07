@@ -1,3 +1,9 @@
+## 1.0.0 (2026-03-07)
+
+* Forked from `just_audio_background` v0.0.1-beta.17 by DayLight Creative Technologies.
+* Promoted to stable 1.0.0 release.
+* Rebranded to `dlct_just_audio_background`.
+
 ## 0.0.1-beta.17
 
 * Fix notification dismissal on player.stop (@rserro).
