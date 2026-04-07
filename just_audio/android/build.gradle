@@ -32,7 +32,7 @@ apply plugin: "com.android.library"
 android {
     namespace "com.ryanheise.just_audio"
 
-    compileSdk = 35
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
