@@ -1,3 +1,7 @@
+## 1.0.1
+
+* iOS/macOS: an exception thrown while handling a method call is reported with its method, name and reason (`Error in handleMethodCall load: NSRangeException: ...`) instead of the bare `Error in handleMethodCall`, so a `PlayerException(9999999)` names what threw (SSK Sentry A4H, gap #1439). URLs in the reason are replaced with `<url>`: an audio source's URL can carry a signed access token.
+
 ## 0.10.5
 
 * Disable Android audio offload by default to prevent playback issues.

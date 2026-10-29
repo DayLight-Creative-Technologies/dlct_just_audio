@@ -122,6 +122,26 @@
     return self;
 }
 
+// DLCT: replaces every URL in [text] with "<url>" (nil becomes ""), so an
+// exception reason that quotes an audio source's signed URL does not carry
+// its access token into an error report.
+static NSString *DLCTRedactUrls(NSString *text) {
+    if (text == nil) {
+        return @"";
+    }
+    static NSRegularExpression *urlPattern;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        urlPattern = [NSRegularExpression regularExpressionWithPattern:@"[A-Za-z][A-Za-z0-9+.-]*://[^\\s\"'<>]+"
+                                                               options:0
+                                                                 error:nil];
+    });
+    return [urlPattern stringByReplacingMatchesInString:text
+                                                options:0
+                                                  range:NSMakeRange(0, text.length)
+                                           withTemplate:@"<url>"];
+}
+
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     @try {
         //NSLog(@"method: %@ index=%d", call.method, _index);
@@ -184,8 +204,12 @@
             result(FlutterMethodNotImplemented);
         }
     } @catch (NSException *exception) {
-        //NSLog(@"%@", [exception callStackSymbols]);
-        FlutterError *flutterError = [FlutterError errorWithCode:@"error" message:@"Error in handleMethodCall" details:nil];
+        // DLCT: name the exception, so a failure reaching Dart as
+        // PlayerException(9999999) says what threw. URLs in the reason are
+        // replaced: an audio source's URL can carry a signed access token.
+        NSString *message = [NSString stringWithFormat:@"Error in handleMethodCall %@: %@: %@",
+                             call.method, exception.name, DLCTRedactUrls(exception.reason)];
+        FlutterError *flutterError = [FlutterError errorWithCode:@"error" message:message details:nil];
         result(flutterError);
     }
 }
